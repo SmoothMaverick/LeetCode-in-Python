@@ -1,6 +1,7 @@
 import pytest
 
-from solution import Solution
+from solution import Iterative
+from solution import Recursive
 from solution import ListNode
 
 test_cases = [
@@ -11,8 +12,7 @@ test_cases = [
 ]
 
 
-@pytest.mark.parametrize("test_input,expected", test_cases)
-def test_iterative(test_input, expected):
+def run_test(test_input, expected, solution):
     head = None
     curr = None
 
@@ -24,9 +24,19 @@ def test_iterative(test_input, expected):
             curr.next = ListNode(n)
             curr = curr.next
 
-    rev_head = Solution().reverseList(head)
+    rev_head = solution().reverseList(head)
 
     for i, n in enumerate(expected):
         msg = "i:", i
         assert rev_head.val == n, msg
         rev_head = rev_head.next
+
+
+@pytest.mark.parametrize("test_input,expected", test_cases)
+def test_iterative(test_input, expected):
+    run_test(test_input, expected, Iterative)
+
+
+@pytest.mark.parametrize("test_input,expected", test_cases)
+def test_recursive(test_input, expected):
+    run_test(test_input, expected, Recursive)
