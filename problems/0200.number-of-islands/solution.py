@@ -7,67 +7,84 @@ class Solution:
         self.visited = set()
         count = 0
 
+        # iterate through matrix
         for y in range(len(grid)):
             for x in range(len(grid[0])):
-                if self.check_land(grid, y, x) == True:
+                # check if land and not visited
+                if grid[y][x] == "1" and (y, x) not in self.visited:
+                    # queue node to visit surrounding nodes later
+                    self.queue.append((y, x))
+                    # increment count
                     count += 1
 
+                # visit surrounding nodes
                 while len(self.queue) > 0:
-                    xy = self.queue.pop(0)
-                    self.find_adjacent(grid, xy[0], xy[1])
+                    yx = self.queue.pop()
+                    self.findAdjacent(grid, yx[0], yx[1])
 
         return count
 
-    def find_adjacent(self, grid: List[List[str]], y: int, x: int):
-        self.check_land(grid, y, x + 1)
-        self.check_land(grid, y, x - 1)
-        self.check_land(grid, y + 1, x)
-        self.check_land(grid, y - 1, x)
+    def findAdjacent(self, grid, y, x):
+        # check within matrix bounds
+        if y > len(grid) - 1:
+            return
+        elif y < 0:
+            return
+        elif x > len(grid[0]) - 1:
+            return
+        elif x < 0:
+            return
 
-        return
+        # check if water or already visited
+        if grid[y][x] != "1" or (y, x) in self.visited:
+            return
 
-    def check_land(self, grid: List[List[str]], y: int, x: int) -> bool:
-        if y >= len(grid) or y < 0:
-            return False
-        if x >= len(grid[0]) or x < 0:
-            return False
-        if (y, x) in self.visited:
-            return False
-        if grid[y][x] == "0":
-            return False
+        # mark node as visited
+        self.visited.add((y, x))
 
-        yx = (y, x)
-        self.visited.add(yx)
-        self.queue.append(yx)
-
-        return True
+        # queue surrounding nodes to visit later
+        self.queue.append((y + 1, x))
+        self.queue.append((y - 1, x))
+        self.queue.append((y, x + 1))
+        self.queue.append((y, x - 1))
 
 
 class Recursive:
     def numIslands(self, grid: List[List[str]]) -> int:
-        if not grid:
-            return 0
-
         count = 0
 
+        # iterate through matrix
         for y in range(len(grid)):
             for x in range(len(grid[0])):
+                # check for land
                 if grid[y][x] == "1":
-                    self.find_adjacent(grid, y, x)
+                    # visit surrounding lands
+                    self.checkAround(grid, y, x)
+                    # increment count
                     count += 1
 
         return count
 
-    def find_adjacent(self, grid: List[List[str]], y: int, x: int):
-        if y >= len(grid) or y < 0:
+    def checkAround(self, grid, y, x):
+        # check within matrix bounds
+        if y > len(grid) - 1:
             return
-        if x >= len(grid[y]) or x < 0:
+        elif y < 0:
             return
+        elif x > len(grid[0]) - 1:
+            return
+        elif x < 0:
+            return
+
+        # check if water or already visited
         if grid[y][x] != "1":
             return
 
-        grid[y][x] = "#"
-        self.find_adjacent(grid, y, x + 1)
-        self.find_adjacent(grid, y, x - 1)
-        self.find_adjacent(grid, y + 1, x)
-        self.find_adjacent(grid, y - 1, x)
+        # mark node as visited
+        grid[y][x] = "2"
+
+        # recursively visit surrounding nodes
+        self.checkAround(grid, y + 1, x)
+        self.checkAround(grid, y - 1, x)
+        self.checkAround(grid, y, x + 1)
+        self.checkAround(grid, y, x - 1)
