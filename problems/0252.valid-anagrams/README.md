@@ -1,28 +1,22 @@
-# [7. Reverse Integer](https://leetcode.com/problems/reverse-integer/)
+# [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/)
 
-Given a 32-bit signed integer, reverse digits of an integer.
+Given two strings s and t , write a function to determine if t is an anagram of s.
 
 Example 1:
 
 ```Text
-Input: 123
-Output: 321
+Input: s = "anagram", t = "nagaram"
+Output: true
 ```
-
 Example 2:
 
 ```Text
-Input: -123
-Output: -321
-```
-
-Example 3:
-
-```Text
-Input: 120
-Output: 21
+Input: s = "rat", t = "car"
+Output: false
 ```
 
 Note:
+You may assume the string contains only lowercase alphabets.
 
-Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31,  2^(31 − 1)]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+Follow up:
+What if the inputs contain unicode characters? How would you adapt your solution to such case?
