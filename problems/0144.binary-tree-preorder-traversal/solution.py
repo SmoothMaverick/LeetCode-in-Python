@@ -32,19 +32,19 @@ class Recursive:
 class Iterative:
     def preorderTraversal(self, root: TreeNode) -> List[int]:
         output = []
-        queue = []
+        stack = []
 
         if root:
-            queue.append(root)
+            stack.append(root)
 
-        while queue:
-            root = queue.pop()
+        while stack:
+            root = stack.pop()
             output.append(root.val)
 
             if root.right:
-                queue.append(root.right)
+                stack.append(root.right)
 
             if root.left:
-                queue.append(root.left)
+                stack.append(root.left)
 
         return output
